@@ -58,7 +58,7 @@ const Login = ({ setToggleLogin }) => {
   //Demo User Login Function
   async function handleDemoSignIn(e) {
     e.preventDefault();
-    const user = { username: "demo", password: "password" };
+    const user = { username: "user1", password: "password1" };
     postFetch(user);
   }
 
