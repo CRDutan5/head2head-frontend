@@ -5,20 +5,14 @@ const Dashboard = ({ handleLogout }) => {
 
   return (
     <div>
-      <br />
-      <br />
-      <h2>Dashboard Component</h2>
-
       {user && (
-        <h1 className="text-7xl">
+        <h1 className="text-3xl">
           Welcome, {user.username[0].toUpperCase()}
           {user.username.slice(1).toLowerCase()}
         </h1>
       )}
 
       {/* Use user data as needed, for example: */}
-
-      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

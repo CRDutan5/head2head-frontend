@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
+import About from "./Components/About";
 
 function App() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function App() {
           path="/register"
           element={<Register setToggleLogin={setToggleLogin} />}
         />
+        <Route path="aboutdev" element={<About />} />
 
         <Route element={<ProtectedRoute />}>
           {/* Place protected routes here */}
