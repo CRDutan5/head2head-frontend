@@ -10,7 +10,7 @@ const Dashboard = ({ handleLogout }) => {
       <h2>Dashboard Component</h2>
 
       {user && (
-        <h1>
+        <h1 className="text-7xl">
           Welcome, {user.username[0].toUpperCase()}
           {user.username.slice(1).toLowerCase()}
         </h1>
