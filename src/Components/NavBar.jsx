@@ -28,17 +28,14 @@ const NavBar = ({ toggleLogin, handleLogout }) => {
   }, [toggleLogin]);
 
   return (
-    <div className="navbar-container">
-      <h1>Navbar Component</h1>
-      <h2>
-        <Link style={{ textDecoration: "none" }} to="/">
-          Your image or Logo (click here to go to Landing Page)
-        </Link>
+    <div className="flex">
+      <h2 className="flex justify-center">
+        <Link to="/">Head2Head</Link>
       </h2>
 
       {!toggleLogin ? (
         <Link to={"/login"}>
-          <span>Login</span>
+          <span className="text-500">Login</span>
         </Link>
       ) : (
         <div>

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const URL = import.meta.env.VITE_BASE_URL;
+// const URL = import.meta.env.VITE_BASE_URL;
+const URL = "http://localhost:3003";
 
 const Login = ({ setToggleLogin }) => {
   const [user, setUser] = useState({ username: "", password: "" });
@@ -57,7 +58,7 @@ const Login = ({ setToggleLogin }) => {
   //Demo User Login Function
   async function handleDemoSignIn(e) {
     e.preventDefault();
-    const user = { username: "demo", password: "password" };
+    const user = { username: "user1", password: "password1" };
     postFetch(user);
   }
 
