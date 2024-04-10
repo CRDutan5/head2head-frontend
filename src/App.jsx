@@ -7,6 +7,8 @@ import Login from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
+import About from "./Components/About";
+import MatchDetails from "./Components/MatchDetailsComponent/MatchDetails";
 
 function App() {
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage toggleLogin={toggleLogin} />} />
         <Route
           path="/login"
           element={<Login setToggleLogin={setToggleLogin} />}
@@ -38,6 +40,7 @@ function App() {
           path="/register"
           element={<Register setToggleLogin={setToggleLogin} />}
         />
+        <Route path="/aboutdev" element={<About />} />
 
         <Route element={<ProtectedRoute />}>
           {/* Place protected routes here */}
@@ -45,6 +48,7 @@ function App() {
             path="/dashboard"
             element={<Dashboard handleLogout={handleLogout} />}
           />
+          <Route path="/dashboard/match/:id" element={<MatchDetails />} />
         </Route>
       </Routes>
     </>

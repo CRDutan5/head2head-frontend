@@ -5,7 +5,14 @@ const URL = import.meta.env.VITE_BASE_URL;
 
 const Register = ({ setToggleLogin }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({ username: "", password: "", email: "" });
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    username: "",
+    email: "",
+    password: "",
+  });
 
   function handleChange(event) {
     setUser({ ...user, [event.target.id]: event.target.value });
@@ -41,50 +48,98 @@ const Register = ({ setToggleLogin }) => {
       console.error("Error during registration:", error);
     }
   }
-
-  // USE THIS FORM TO BUILD OUT YOUR FORM PROPERLY BY ADDING LABELS AND INPUTS AS WELL AS WHATEVER CSS FRAMEWORK YOU MAY USE OR VANILLA CSS. THIS IS JUST A BOILERPLATE CODE
-
   return (
-    <div style={{ textAlign: "center" }}>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-      <h3>Register</h3>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">
-          <input
-            id="username"
-            value={user.username}
-            type="text"
-            placeholder="username"
-            onChange={handleChange}
-            autoComplete="username"
-          />
-        </label>
+    <div className="max-w-md mx-auto">
+      <h3 className="mb-4 text-xl flex justify-center">Register</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="firstName">First Name:</label>
+            <input
+              id="firstName"
+              value={user.firstName}
+              type="firstName"
+              placeholder="First Name"
+              onChange={handleChange}
+              // autoComplete="current-password"
+              className="border border-gray-300 p-2 rounded-md"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="lastName">Last Name: </label>
+            <input
+              id="lastName"
+              value={user.lastName}
+              type="lastName"
+              placeholder="Last Name"
+              onChange={handleChange}
+              // autoComplete="current-password"
+              className="border border-gray-300 p-2 rounded-md"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="dob">Date of Birth: </label>
+            <input
+              id="dob"
+              value={user.dob}
+              type="dob"
+              placeholder="Last Name"
+              onChange={handleChange}
+              // autoComplete="current-password"
+              className="border border-gray-300 p-2 rounded-md"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="username">Username:</label>
+            <input
+              id="username"
+              value={user.username}
+              type="text"
+              placeholder="Username"
+              onChange={handleChange}
+              autoComplete="username"
+              className="border border-gray-300 p-2 rounded-md"
+            />
+          </div>
 
-        <label htmlFor="email">
-          <input
-            id="email"
-            value={user.email}
-            type="email"
-            placeholder="email"
-            onChange={handleChange}
-            autoComplete="email"
-          />
-        </label>
+          <div className="flex flex-col">
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              value={user.email}
+              type="email"
+              placeholder="Email"
+              onChange={handleChange}
+              autoComplete="email"
+              className="border border-gray-300 p-2 rounded-md"
+            />
+          </div>
 
-        <label htmlFor="password">
-          <input
-            id="password"
-            value={user.password}
-            type="password"
-            placeholder="password"
-            onChange={handleChange}
-            autoComplete="current-password"
-          />
-        </label>
+          <div className="flex flex-col">
+            <label htmlFor="password">Password:</label>
+            <input
+              id="password"
+              value={user.password}
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+              autoComplete="current-password"
+              className="border border-gray-300 p-2 rounded-md"
+            />
+          </div>
+        </div>
 
-        <button>Submit</button>
+        <p>
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500">
+            Click here to login!
+          </Link>
+        </p>
+        <div className="flex justify-center">
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-md">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

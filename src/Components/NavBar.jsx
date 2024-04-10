@@ -1,51 +1,59 @@
 import { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 
 const URL = import.meta.env.VITE_BASE_URL;
 
-const NavBar = ({ toggleLogin, handleLogout }) => {
+const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (!toggleLogin) setUser(null);
-
-    if (toggleLogin) {
-      const token = localStorage.getItem("token");
-      if (token) {
-        fetch(`${URL}/api/auth/user`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToggleLogin(true);
+      fetch(`${URL}/api/auth/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setUser(data.user);
         })
-          .then((response) => response.json())
-          .then((data) => {
-            setUser(data.user);
-          })
-          .catch((error) => console.error("Error fetching user:", error));
-      }
+        .catch((error) => console.error("Error fetching user:", error));
     }
   }, [toggleLogin]);
 
   return (
-    <div className="flex">
-      <h2 className="flex justify-center">
-        <Link to="/">Head2Head</Link>
-      </h2>
-
-      {!toggleLogin ? (
-        <Link to={"/login"}>
-          <span className="text-500">Login</span>
-        </Link>
-      ) : (
-        <div>
-          {user && <span>Hello, {user.username.toUpperCase()}? | </span>}
-          <Link onClick={handleLogout}>
-            <span>Logout</span>
+    <div className="border-black border-2 flex justify-between items-center  font-bold p-5">
+      <div>
+        <h2>
+          <Link to="/" className="text-3xl m-2">
+            Head2Head
           </Link>
-        </div>
-      )}
-      <hr />
+        </h2>
+      </div>
+      <div className="flex items-center">
+        {toggleLogin && (
+          <h2 className="mr-6 text-xl">
+            <Link to="/dashboard">Dashboard</Link>
+          </h2>
+        )}
+        <h2 className="mr-6 text-xl">
+          <Link to="/aboutdev">About the Dev</Link>
+        </h2>
+        {!toggleLogin ? (
+          <Link to="/login" className="text-xl">
+            Login
+          </Link>
+        ) : (
+          <div className="text-xl">
+            {user && <span>Hello, {user.first_name.toUpperCase()} | </span>}
+            <Link to="/" onClick={handleLogout}>
+              Logout
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
