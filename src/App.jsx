@@ -39,7 +39,7 @@ function App() {
           path="/register"
           element={<Register setToggleLogin={setToggleLogin} />}
         />
-        <Route path="aboutdev" element={<About />} />
+        <Route path="/aboutdev" element={<About />} />
 
         <Route element={<ProtectedRoute />}>
           {/* Place protected routes here */}

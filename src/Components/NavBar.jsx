@@ -21,12 +21,10 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
         })
         .catch((error) => console.error("Error fetching user:", error));
     }
-  }, [setToggleLogin]);
-
-  console.log(user);
+  }, [toggleLogin]);
 
   return (
-    <div className="border-black border-2 flex justify-between items-center  font-bold p-2">
+    <div className="border-black border-2 flex justify-between items-center  font-bold p-5">
       <div>
         <h2>
           <Link to="/" className="text-3xl m-2">
@@ -39,12 +37,12 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
           <Link to="/aboutdev">About the Dev</Link>
         </h2>
         {!toggleLogin ? (
-          <Link to="/login" className="text-xl m-5">
+          <Link to="/login" className="text-xl">
             Login
           </Link>
         ) : (
           <div className="text-xl">
-            {user && <span>Hello, {user.username.toUpperCase()} | </span>}
+            {user && <span>Hello, {user.first_name.toUpperCase()} | </span>}
             <Link to="/" onClick={handleLogout}>
               Logout
             </Link>
