@@ -31,7 +31,7 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage toggleLogin={toggleLogin} />} />
         <Route
           path="/login"
           element={<Login setToggleLogin={setToggleLogin} />}
