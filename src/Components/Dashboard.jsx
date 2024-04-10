@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import MatchCard from "./DashboardComponents/MatchCard";
+import PlayerCard from "./DashboardComponents/PlayerCard";
 
 const Dashboard = ({ handleLogout }) => {
   const { user } = useOutletContext(); // Access user data provided by the Outlet's context
@@ -20,12 +21,21 @@ const Dashboard = ({ handleLogout }) => {
   }, [matches]);
 
   return (
-    <div className="p-5">
-      <h1 className="text-xl">Join a Game!</h1>
-      <div className="flex flex-wrap gap-6">
-        {matches.map((match) => (
-          <MatchCard key={match.id} match={match} />
-        ))}
+    <div className="p-5 flex flex-col md:flex-row">
+      <div className="sm:w-3/4">
+        {" "}
+        {/* Adjusted */}
+        <h1 className="text-xl">Join a Game!</h1>
+        <div className="flex flex-wrap gap-6">
+          {matches.map((match) => (
+            <MatchCard key={match.id} match={match} />
+          ))}
+        </div>
+      </div>
+      <div className="sm:w-1/4">
+        {" "}
+        {/* Adjusted */}
+        <PlayerCard />
       </div>
     </div>
   );
