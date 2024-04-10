@@ -33,6 +33,11 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
         </h2>
       </div>
       <div className="flex items-center">
+        {toggleLogin && (
+          <h2 className="mr-6 text-xl">
+            <Link to="/dashboard">Dashboard</Link>
+          </h2>
+        )}
         <h2 className="mr-6 text-xl">
           <Link to="/aboutdev">About the Dev</Link>
         </h2>

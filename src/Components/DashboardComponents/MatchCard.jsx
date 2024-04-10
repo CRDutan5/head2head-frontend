@@ -1,5 +1,6 @@
 import React from "react";
 import { dateFormatted, timeFormatted } from "../../../helper";
+import { Link } from "react-router-dom";
 
 const MatchCard = ({ match }) => {
   return (
@@ -11,9 +12,11 @@ const MatchCard = ({ match }) => {
         <p className="m-1">{dateFormatted(match.start_datetime)}</p>
         <p className="m-1">{timeFormatted(match.start_datetime)}</p>
         <div className="flex justify-end">
-          <button className="border-black border-2 m-1 p-1 rounded-lg">
-            View More...
-          </button>
+          <Link to={`/dashboard/match/${match.id}`}>
+            <button className="border-black border-2 m-1 p-1 rounded-lg">
+              View More...
+            </button>
+          </Link>
         </div>
       </div>
     </div>

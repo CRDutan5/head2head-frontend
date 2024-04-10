@@ -8,6 +8,7 @@ import Dashboard from "./Components/Dashboard";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
 import About from "./Components/About";
+import MatchDetails from "./Components/MatchDetailsComponent/MatchDetails";
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function App() {
             path="/dashboard"
             element={<Dashboard handleLogout={handleLogout} />}
           />
+          <Route path="/dashboard/match/:id" element={<MatchDetails />} />
         </Route>
       </Routes>
     </>
