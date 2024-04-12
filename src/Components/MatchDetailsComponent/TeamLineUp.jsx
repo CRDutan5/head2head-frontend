@@ -6,7 +6,7 @@ const TeamLineUp = ({ id }) => {
   const URL = import.meta.env.VITE_BASE_URL;
   const { user } = useOutletContext();
   const [teamDetails, setTeamDetails] = useState({});
-  const [editTeam, setEditTeam] = useState({});
+  const [isPositionSelected, setIsPositionSelected] = useState(false);
 
   useEffect(() => {
     fetch(`${URL}/api/match/${id}/teams`)
@@ -26,11 +26,8 @@ const TeamLineUp = ({ id }) => {
     "forward",
   ];
 
-  // const positionKey = `${teamType}_${position}_name`;
-  // const updatedDetails = { ...teamDetails, [positionKey]: user.first_name };
-  // console.log(updatedDetails);
-
   const handleJoinGame = (teamType, position) => {
+    setIsPositionSelected(true);
     fetch(`${URL}/api/team/${teamType === "away" ? awayTeamId : homeTeamId}`)
       .then((res) => res.json())
       .then((teamData) => {
@@ -59,16 +56,24 @@ const TeamLineUp = ({ id }) => {
     <div className="flex justify-center">
       {["home", "away"].map((teamType) => (
         <div key={teamType} className="px-10">
-          <h1>{teamDetails[`${teamType}_team_name`]}</h1>
+          <div className="flex justify-center font-bold text-xl">
+            <h1>{teamDetails[`${teamType}_team_name`]}</h1>
+          </div>
           {positions.map((position) => {
             const positionKey = `${teamType}_${position}_name`;
             return (
-              <p key={positionKey} className="border-2 border-black">
+              <p
+                key={positionKey}
+                className="border-2 border-black py-2 px-10 flex justify-center rounded-md m-2"
+              >
                 <strong>{position.toUpperCase()}: </strong>
                 {teamDetails[positionKey] ? (
                   teamDetails[positionKey]
                 ) : (
-                  <button onClick={() => handleJoinGame(teamType, position)}>
+                  <button
+                    onClick={() => handleJoinGame(teamType, position)}
+                    disabled={isPositionSelected}
+                  >
                     + Click here to join!
                   </button>
                 )}
