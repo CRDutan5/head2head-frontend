@@ -33,16 +33,39 @@ const TeamLineUp = ({ id }) => {
     "forward",
   ];
 
-  const handleRemove = (positionKey) => {};
+  // const handleRemove = (teamType, position) => {
+  //   // setIsPositionSelected(false);
+  //   // console.log(isPositionSelected);
+  //   fetch(`${URL}/api/team/${teamType === "away" ? awayTeamId : homeTeamId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const updatedTeamInfo = {
+  //         ...data,
+  //         [position]: null,
+  //       };
+  //       setIndividualTeamDetails(updatedTeamInfo);
+  //       const options = {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(updatedTeamInfo),
+  //       };
+  //       return fetch(
+  //         `${URL}/api/team/${teamType === "away" ? awayTeamId : homeTeamId}`,
+  //         options
+  //       );
+  //     });
+  // };
 
-  const handleJoinGame = (teamType, position) => {
-    setIsPositionSelected(true);
+  const handleJoinGame = (teamType, position, bool) => {
+    // setIsPositionSelected(true);
     fetch(`${URL}/api/team/${teamType === "away" ? awayTeamId : homeTeamId}`)
       .then((res) => res.json())
       .then((teamData) => {
         const updatedTeamDetails = {
           ...teamData,
-          [position]: user.id,
+          [position]: bool === false ? null : user.id,
         };
         setIndividualTeamDetails(updatedTeamDetails);
         const options = {
@@ -60,42 +83,6 @@ const TeamLineUp = ({ id }) => {
       .then((res) => res.json())
       .catch((error) => console.error("Error updating team lineup:", error));
   };
-
-  // IndividualTeamDetails State:
-  // {
-  //   "id": 1,
-  //   "name": "Phoenix Rising",
-  //   "home_color": "Red",
-  //   "away_color": "Blue",
-  //   "creator_id": 1,
-  //   "goalie": 4,
-  //   "defender_one": 3,
-  //   "defender_two": 7,
-  //   "midfielder_one": 6,
-  //   "midfielder_two": 10,
-  //   "forward": 9
-  //   }
-
-  // TeamDetails State:
-  // {
-  //   "match_id": 6,
-  //   "home_team_id": 12,
-  //   "away_team_id": 11,
-  //   "home_team_name": "Twilight Titans",
-  //   "away_team_name": "Olympian Owls",
-  //   "home_goalie_name": "John",
-  //   "home_defender_one_name": "John",
-  //   "home_defender_two_name": null,
-  //   "home_midfielder_one_name": null,
-  //   "home_midfielder_two_name": null,
-  //   "home_forward_name": null,
-  //   "away_goalie_name": "James",
-  //   "away_defender_one_name": "David",
-  //   "away_defender_two_name": null,
-  //   "away_midfielder_one_name": "William",
-  //   "away_midfielder_two_name": "Ryan",
-  //   "away_forward_name": "Alexander"
-  //   }
 
   return (
     <div className="flex justify-center">
@@ -118,7 +105,9 @@ const TeamLineUp = ({ id }) => {
                     {user.id === individualTeamDetails.id &&
                       user.first_name === teamDetails[positionKey] && (
                         <button
-                          onClick={() => handleRemove(positionKey)}
+                          onClick={() =>
+                            handleJoinGame(teamType, position, false)
+                          }
                           className="border-2 border-black"
                         >
                           ❌ Remove
@@ -127,8 +116,8 @@ const TeamLineUp = ({ id }) => {
                   </>
                 ) : (
                   <button
-                    onClick={() => handleJoinGame(teamType, position)}
-                    disabled={isPositionSelected}
+                    onClick={() => handleJoinGame(teamType, position, true)}
+                    // disabled={isPositionSelected}
                   >
                     + Click here to join!
                   </button>
