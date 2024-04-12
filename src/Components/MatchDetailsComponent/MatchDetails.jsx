@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dateFormatted, timeFormatted } from "../../../helper";
+import TeamLineUp from "./TeamLineUp";
 
 const MatchDetails = () => {
   const URL = import.meta.env.VITE_BASE_URL;
@@ -36,7 +37,7 @@ const MatchDetails = () => {
         </div>
       </div>
       <div>
-        <h1>This is where Teams will go</h1>
+        <TeamLineUp id={id} />
       </div>
     </div>
   );
