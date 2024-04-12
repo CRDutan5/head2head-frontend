@@ -2,17 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const TeamLineUp = ({ id }) => {
-  // id is the match NOT TEAM
   const URL = import.meta.env.VITE_BASE_URL;
   const { user } = useOutletContext();
   const [teamDetails, setTeamDetails] = useState({});
   const [isPositionSelected, setIsPositionSelected] = useState(false);
+  const [individualTeamDetails, setIndividualTeamDetails] = useState({});
 
   useEffect(() => {
     fetch(`${URL}/api/match/${id}/teams`)
       .then((res) => res.json())
       .then((data) => setTeamDetails(data[0]));
-  }, [id, teamDetails]);
+
+    fetch(`${URL}/api/team/${user.id}`)
+      .then((res) => res.json())
+      .then((teamData) => setIndividualTeamDetails(teamData))
+      .catch((error) =>
+        console.error("Error fetching individual team details:", error)
+      );
+  }, [id, user.id, teamDetails]);
 
   const awayTeamId = teamDetails.away_team_id;
   const homeTeamId = teamDetails.home_team_id;
@@ -26,6 +33,8 @@ const TeamLineUp = ({ id }) => {
     "forward",
   ];
 
+  const handleRemove = (positionKey) => {};
+
   const handleJoinGame = (teamType, position) => {
     setIsPositionSelected(true);
     fetch(`${URL}/api/team/${teamType === "away" ? awayTeamId : homeTeamId}`)
@@ -35,6 +44,8 @@ const TeamLineUp = ({ id }) => {
           ...teamData,
           [position]: user.id,
         };
+        console.log(updatedTeamDetails);
+        setIndividualTeamDetails(updatedTeamDetails);
         const options = {
           method: "PUT",
           headers: {
@@ -68,7 +79,15 @@ const TeamLineUp = ({ id }) => {
               >
                 <strong>{position.toUpperCase()}: </strong>
                 {teamDetails[positionKey] ? (
-                  teamDetails[positionKey]
+                  <>
+                    <span>{teamDetails[positionKey]}</span>
+                    {user.id === individualTeamDetails.id &&
+                      user.first_name === teamDetails[positionKey] && (
+                        <button onClick={() => handleRemove(positionKey)}>
+                          ❌ Remove
+                        </button>
+                      )}
+                  </>
                 ) : (
                   <button
                     onClick={() => handleJoinGame(teamType, position)}
