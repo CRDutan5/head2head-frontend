@@ -9,6 +9,7 @@ import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
 import About from "./Components/About";
 import MatchDetails from "./Components/MatchDetailsComponent/MatchDetails";
+import NewMatchForm from "./Components/DevelopingMatchComponents/NewMatchForm";
 
 function App() {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ function App() {
             path="/dashboard"
             element={<Dashboard handleLogout={handleLogout} />}
           />
+          <Route path="/dashboard/match/create" element={<NewMatchForm />} />
           <Route path="/dashboard/match/:id" element={<MatchDetails />} />
         </Route>
       </Routes>
