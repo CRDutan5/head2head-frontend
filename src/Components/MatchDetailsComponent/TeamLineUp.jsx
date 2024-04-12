@@ -44,7 +44,6 @@ const TeamLineUp = ({ id }) => {
           ...teamData,
           [position]: user.id,
         };
-        console.log(updatedTeamDetails);
         setIndividualTeamDetails(updatedTeamDetails);
         const options = {
           method: "PUT",
@@ -59,9 +58,44 @@ const TeamLineUp = ({ id }) => {
         );
       })
       .then((res) => res.json())
-      .then((data) => console.log(data))
       .catch((error) => console.error("Error updating team lineup:", error));
   };
+
+  // IndividualTeamDetails State:
+  // {
+  //   "id": 1,
+  //   "name": "Phoenix Rising",
+  //   "home_color": "Red",
+  //   "away_color": "Blue",
+  //   "creator_id": 1,
+  //   "goalie": 4,
+  //   "defender_one": 3,
+  //   "defender_two": 7,
+  //   "midfielder_one": 6,
+  //   "midfielder_two": 10,
+  //   "forward": 9
+  //   }
+
+  // TeamDetails State:
+  // {
+  //   "match_id": 6,
+  //   "home_team_id": 12,
+  //   "away_team_id": 11,
+  //   "home_team_name": "Twilight Titans",
+  //   "away_team_name": "Olympian Owls",
+  //   "home_goalie_name": "John",
+  //   "home_defender_one_name": "John",
+  //   "home_defender_two_name": null,
+  //   "home_midfielder_one_name": null,
+  //   "home_midfielder_two_name": null,
+  //   "home_forward_name": null,
+  //   "away_goalie_name": "James",
+  //   "away_defender_one_name": "David",
+  //   "away_defender_two_name": null,
+  //   "away_midfielder_one_name": "William",
+  //   "away_midfielder_two_name": "Ryan",
+  //   "away_forward_name": "Alexander"
+  //   }
 
   return (
     <div className="flex justify-center">
@@ -83,7 +117,10 @@ const TeamLineUp = ({ id }) => {
                     <span>{teamDetails[positionKey]}</span>
                     {user.id === individualTeamDetails.id &&
                       user.first_name === teamDetails[positionKey] && (
-                        <button onClick={() => handleRemove(positionKey)}>
+                        <button
+                          onClick={() => handleRemove(positionKey)}
+                          className="border-2 border-black"
+                        >
                           ❌ Remove
                         </button>
                       )}
