@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const MatchCard = ({ match }) => {
   return (
-    <div className="max-w-sm border-4 border-black flex">
+    <div className="max-w-sm  flex shadow-2xl rounded-lg border-4 border-gray-200">
       <div className="flex-1">
         <div className="h-52 w-80 overflow-hidden">
           <img src={match.img} alt="" className="w-full h-full object-cover" />
