@@ -12,6 +12,7 @@ const NewMatchForm = () => {
     date: "",
     time: "",
     duration: "",
+    img: "",
     address: "",
     city: "",
     state: "",
@@ -77,7 +78,7 @@ const NewMatchForm = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        navigate("/dashboard");
+        navigate(`/dashboard/match/${data.id}`);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -125,6 +126,17 @@ const NewMatchForm = () => {
               <option value="90">90 Minutes</option>
               <option value="120">120 Minutes</option>
             </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="time">Image Link: </label>
+            <input
+              type="url"
+              id="img"
+              value={matchInput.img}
+              className="border border-gray-300 p-2 rounded-md"
+              onChange={handleChange}
+              placeholder="https://example.com"
+            />
           </div>
           <div className="flex flex-col">
             <label htmlFor="address">Address:</label>
