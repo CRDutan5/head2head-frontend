@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import SoccerBall from "../../images/SoccerBall";
 
 const URL = import.meta.env.VITE_BASE_URL;
 
@@ -26,11 +27,16 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
   return (
     <div className="border-black border-2 flex justify-between items-center  font-bold p-5">
       <div>
-        <h2>
-          <Link to="/" className="text-3xl m-2">
-            Head2Head
-          </Link>
-        </h2>
+        <div className="flex">
+          <div className="flex items-center">
+            <Link to="/" className="text-3xl m-2">
+              H2H
+            </Link>
+          </div>
+          <div className="flex items-center">
+            <SoccerBall />
+          </div>
+        </div>
       </div>
       <div className="flex items-center">
         {toggleLogin && (

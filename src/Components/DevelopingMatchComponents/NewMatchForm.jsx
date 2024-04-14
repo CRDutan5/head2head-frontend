@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 const NewMatchForm = () => {
   const { user } = useOutletContext();
+  const URL = import.meta.env.VITE_BASE_URL;
+
+  const navigate = useNavigate();
 
   const [matchInput, setMatchInput] = useState({
     // start_datetime: null,
     date: "",
     time: "",
     duration: "",
+    img: "",
     address: "",
     city: "",
     state: "",
@@ -48,13 +52,46 @@ const NewMatchForm = () => {
     });
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    const start_datetime = `${matchInput.date}T${matchInput.time}:00.000Z`;
+
+    const match = {
+      ...matchInput,
+      start_datetime: start_datetime,
+    };
+
+    delete match.date;
+    delete match.time;
+
+    const homeTeam = homeTeamInput;
+    const awayTeam = awayTeamInput;
+    const createdMatch = { match, homeTeam, awayTeam };
+
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(createdMatch),
+    };
+
+    fetch(`${URL}/api/match`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        navigate(`/dashboard/match/${data.id}`);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   return (
     <div className="flex justify-center items-center mt-16">
       <div className="border-2 border-black p-5">
         <div className="flex justify-center font-bold text-2xl mb-4">
           <h1>Create a Game</h1>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="date">Date: </label>
             <input
@@ -89,6 +126,17 @@ const NewMatchForm = () => {
               <option value="90">90 Minutes</option>
               <option value="120">120 Minutes</option>
             </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="time">Image Link: </label>
+            <input
+              type="url"
+              id="img"
+              value={matchInput.img}
+              className="border border-gray-300 p-2 rounded-md"
+              onChange={handleChange}
+              placeholder="https://example.com"
+            />
           </div>
           <div className="flex flex-col">
             <label htmlFor="address">Address:</label>
