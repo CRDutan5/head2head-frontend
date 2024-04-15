@@ -6,7 +6,7 @@ const PlayerCard = () => {
   const { user } = useOutletContext();
   //   console.log(user.first_name);
   return (
-    <div className="border-2 border-black max-h-fit m-7 bg-slate-100 rounded-xl">
+    <div className="border-4 border-amber-500 max-h-fit m-7 bg-slate-100 rounded-xl">
       <div className="flex justify-center">
         <h1 className="font-bold p-5">{`${user.first_name} ${user.last_name}`}</h1>
       </div>

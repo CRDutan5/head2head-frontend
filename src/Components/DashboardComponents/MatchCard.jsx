@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const MatchCard = ({ match }) => {
   return (
     <div className="max-w-sm  flex shadow-2xl rounded-lg border-4 border-gray-200 bg-slate-100">
-      <div className="flex-1">
+      <div className=" flex-1">
         <div className="h-52 w-80 overflow-hidden">
           <img
             src={match.img}
@@ -27,7 +27,7 @@ const MatchCard = ({ match }) => {
 
         <div className="flex justify-end">
           <Link to={`/dashboard/match/${match.id}`}>
-            <button className="border-black border-2 m-1 p-1 rounded-lg hover:bg-gradient-to-b from-green-500 to-lime-400 font-bold">
+            <button className="border-black border-2 m-1 p-1 rounded-lg bg-amber-500 hover:font-bold">
               View More...
             </button>
           </Link>

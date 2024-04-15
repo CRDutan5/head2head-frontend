@@ -6,7 +6,7 @@ import { useEffect } from "react";
 function LandingPage({ toggleLogin }) {
   return (
     <div className="grid grid-cols-3 gap-4">
-      <div className="bg-white h-screen col-span-2 flex justify-center items-center border-4 border-black">
+      <div className=" h-screen col-span-2 flex justify-center items-center ">
         <div className="bg-white h-2/4 w-3/4 rounded-lg">
           <img
             src="images/landingpage.jpg"
