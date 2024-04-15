@@ -21,14 +21,14 @@ const Dashboard = ({ handleLogout }) => {
   }, [matches]);
 
   return (
-    <div className="p-5 flex flex-col md:flex-row">
+    <div className="p-5 flex flex-col md:flex-row ">
       <div className="sm:w-3/4">
         {" "}
-        <div className="flex text-xl mb-4 items-center">
+        <div className="flex text-xl mb-4 items-center  font-bold">
           <h1 className="">Join a Match! </h1>
           <p className="mx-2">OR</p>
           <Link to={"/dashboard/match/create"}>
-            <button className="border-black border-2 rounded-lg p-1 bg-blue-200">
+            <button className="border-black border-2 m-1 p-1 rounded-lg bg-slate-100 hover:bg-gradient-to-b from-green-500 to-lime-400 font-bold0">
               Create a Match!
             </button>
           </Link>

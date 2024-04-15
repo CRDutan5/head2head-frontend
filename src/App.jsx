@@ -25,34 +25,36 @@ function App() {
 
   return (
     <>
-      <NavBar
-        handleLogout={handleLogout}
-        toggleLogin={toggleLogin}
-        setToggleLogin={setToggleLogin}
-      />
-
-      <Routes>
-        <Route path="/" element={<LandingPage toggleLogin={toggleLogin} />} />
-        <Route
-          path="/login"
-          element={<Login setToggleLogin={setToggleLogin} />}
+      <div className="bg-gradient-to-b from-slate-400 to-slate-200 ">
+        <NavBar
+          handleLogout={handleLogout}
+          toggleLogin={toggleLogin}
+          setToggleLogin={setToggleLogin}
         />
-        <Route
-          path="/register"
-          element={<Register setToggleLogin={setToggleLogin} />}
-        />
-        <Route path="/aboutdev" element={<About />} />
 
-        <Route element={<ProtectedRoute />}>
-          {/* Place protected routes here */}
+        <Routes>
+          <Route path="/" element={<LandingPage toggleLogin={toggleLogin} />} />
           <Route
-            path="/dashboard"
-            element={<Dashboard handleLogout={handleLogout} />}
+            path="/login"
+            element={<Login setToggleLogin={setToggleLogin} />}
           />
-          <Route path="/dashboard/match/create" element={<NewMatchForm />} />
-          <Route path="/dashboard/match/:id" element={<MatchDetails />} />
-        </Route>
-      </Routes>
+          <Route
+            path="/register"
+            element={<Register setToggleLogin={setToggleLogin} />}
+          />
+          <Route path="/aboutdev" element={<About />} />
+
+          <Route element={<ProtectedRoute />}>
+            {/* Place protected routes here */}
+            <Route
+              path="/dashboard"
+              element={<Dashboard handleLogout={handleLogout} />}
+            />
+            <Route path="/dashboard/match/create" element={<NewMatchForm />} />
+            <Route path="/dashboard/match/:id" element={<MatchDetails />} />
+          </Route>
+        </Routes>
+      </div>
     </>
   );
 }
