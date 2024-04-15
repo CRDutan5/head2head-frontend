@@ -50,8 +50,9 @@ function App() {
               path="/dashboard"
               element={<Dashboard handleLogout={handleLogout} />}
             />
-            <Route path="/dashboard/match/create" element={<NewMatchForm />} />
             <Route path="/dashboard/match/:id" element={<MatchDetails />} />
+
+            <Route path="/dashboard/match/create" element={<NewMatchForm />} />
           </Route>
         </Routes>
       </div>

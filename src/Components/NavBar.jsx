@@ -29,7 +29,7 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
       <div>
         <div className="flex">
           <div className="flex items-center">
-            <Link to="/" className="text-3xl m-2 text-gray-300">
+            <Link to="/" className="text-3xl m-2 text-white">
               H2H
             </Link>
           </div>
@@ -41,23 +41,23 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
       <div className="flex items-center ">
         {toggleLogin && (
           <h2 className="mr-6 text-xl hover:border-b-2 border-gray-200">
-            <Link to="/dashboard" className=" text-gray-200  ">
+            <Link to="/dashboard" className=" text-white  ">
               All Games
             </Link>
           </h2>
         )}
-        <h2 className="mr-6 text-xl text-gray-200 hover:border-b-2 border-gray-200  ">
+        <h2 className="mr-6 text-xl text-white hover:border-b-2 border-gray-200  ">
           <Link to="/aboutdev">About the Dev</Link>
         </h2>
         {!toggleLogin ? (
           <Link
             to="/login"
-            className="text-xl text-gray-200 hover:border-b-2 border-gray-200 "
+            className="text-xl text-white hover:border-b-2 border-gray-200 "
           >
             Login
           </Link>
         ) : (
-          <div className="text-xl text-gray-300 ">
+          <div className="text-xl text-white ">
             {user && <span>Welcome, {user.first_name} | </span>}
             <Link
               to="/"
