@@ -21,10 +21,11 @@ const MatchDetails = () => {
   return (
     <div className="p-5">
       <div className="grid grid-cols-2 pb-10">
-        <div className="text-xl">
+        <div className="text-xl ">
+          <p className="font-bold mb-1">Match Details: </p>
           <p className="mb-1">{dateFormatted(match.start_datetime)}</p>
           <p className="mb-1">{timeFormatted(match.start_datetime)}</p>
-          <p className="mb-1">{match.duration} minutes</p>
+          <p className="mb-1">{match.duration} Minutes</p>
           <p className="mb-1">{`${address} `}</p>
           <p>{`${city}, ${state} ${zip}`}</p>
         </div>

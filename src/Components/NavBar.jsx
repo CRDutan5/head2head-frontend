@@ -25,11 +25,11 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
   }, [toggleLogin]);
 
   return (
-    <div className="border-black border-2 flex justify-between items-center  font-bold p-5">
+    <div className="bg-gradient-to-b from-slate-700 to-slate-400 shadow-xl flex justify-between items-center font-semibold p-5 border-b-dotted ">
       <div>
         <div className="flex">
           <div className="flex items-center">
-            <Link to="/" className="text-3xl m-2">
+            <Link to="/" className="text-3xl m-2 text-gray-300">
               H2H
             </Link>
           </div>
@@ -38,23 +38,32 @@ const NavBar = ({ toggleLogin, setToggleLogin, handleLogout }) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center ">
         {toggleLogin && (
-          <h2 className="mr-6 text-xl">
-            <Link to="/dashboard">Dashboard</Link>
+          <h2 className="mr-6 text-xl hover:border-b-2 border-gray-200">
+            <Link to="/dashboard" className=" text-gray-200  ">
+              All Games
+            </Link>
           </h2>
         )}
-        <h2 className="mr-6 text-xl">
+        <h2 className="mr-6 text-xl text-gray-200 hover:border-b-2 border-gray-200  ">
           <Link to="/aboutdev">About the Dev</Link>
         </h2>
         {!toggleLogin ? (
-          <Link to="/login" className="text-xl">
+          <Link
+            to="/login"
+            className="text-xl text-gray-200 hover:border-b-2 border-gray-200 "
+          >
             Login
           </Link>
         ) : (
-          <div className="text-xl">
-            {user && <span>Hello, {user.first_name.toUpperCase()} | </span>}
-            <Link to="/" onClick={handleLogout}>
+          <div className="text-xl text-gray-300 ">
+            {user && <span>Welcome, {user.first_name} | </span>}
+            <Link
+              to="/"
+              onClick={handleLogout}
+              className="hover:border-b-2 border-gray-200"
+            >
               Logout
             </Link>
           </div>
