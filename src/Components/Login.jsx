@@ -63,50 +63,52 @@ const Login = ({ setToggleLogin }) => {
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Login Component</h1>
-      <br />
-      <h2>
-        Use the DemoUser button to login and save time during your presentation
-      </h2>
-      <button onClick={handleDemoSignIn}>Demo User</button>
-      <br />
-      <br />
-      <br />
-
-      <h3> Remove the 'br' tags and these instructions if you use this code</h3>
-
-      <br />
-      <br />
-      <br />
-      <h3>Below is the regular login form which should be functional</h3>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">
-          <input
-            id="username"
-            value={user.username}
-            type="text"
-            placeholder="username"
-            autoComplete="username"
-            onChange={handleChange}
-          />
-        </label>
-
-        <label htmlFor="password">
-          <input
-            id="password"
-            value={user.password}
-            type="password"
-            placeholder="password"
-            onChange={handleChange}
-            autoComplete="current-password"
-          />
-        </label>
-        <button>Submit</button>
-      </form>
-      <p>
-        No Account? <Link to="/register">Register</Link>
-      </p>
+    <div
+      className="h-screen flex justify-center items-center"
+      style={{ textAlign: "center" }}
+    >
+      <div>
+        <form onSubmit={handleSubmit}>
+          <div className="">
+            <div className="flex flex-col">
+              <label htmlFor="username">Username</label>
+              <input
+                id="username"
+                value={user.username}
+                type="text"
+                placeholder="username"
+                autoComplete="username"
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded-md my-2"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="password">Password </label>
+              <input
+                id="password"
+                value={user.password}
+                type="password"
+                placeholder="password"
+                onChange={handleChange}
+                autoComplete="current-password"
+                className="border border-gray-300 p-2 rounded-md my-2"
+              />
+            </div>
+          </div>
+          <button
+            className="border-black border-2 bg-white m-1 p-1 rounded-lg hover:bg-gradient-to-b from-green-500 to-lime-400 font-bold"
+            onClick={handleDemoSignIn}
+          >
+            Demo User
+          </button>
+          <button className="border-black border-2 bg-white m-1 p-1 rounded-lg hover:bg-gradient-to-b from-green-500 to-lime-400 font-bold">
+            Submit
+          </button>
+        </form>
+        <p>
+          No Account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
   );
 };

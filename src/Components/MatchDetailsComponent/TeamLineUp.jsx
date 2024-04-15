@@ -85,24 +85,34 @@ const TeamLineUp = ({ id }) => {
   };
 
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       {["home", "away"].map((teamType) => (
         <div key={teamType} className="px-10 ">
           <div className="flex justify-center font-bold text-xl">
-            <h1>{teamDetails[`${teamType}_team_name`]}</h1>
+            <h1
+              className="font-extrabold"
+              style={{
+                color:
+                  teamType === "home"
+                    ? teamDetails.home_team_color
+                    : teamDetails.away_team_color,
+              }}
+            >
+              {teamDetails[`${teamType}_team_name`]}
+            </h1>
           </div>
           {positions.map((position) => {
             const positionKey = `${teamType}_${position}_name`;
             return (
               <p
                 key={positionKey}
-                className={`border-2 border-black py-2 px-10 flex justify-center rounded-md m-2`}
-                style={{
-                  backgroundColor:
-                    teamType === "home"
-                      ? teamDetails.home_team_color
-                      : teamDetails.away_team_color,
-                }}
+                className={`border-2 border-black py-2 px-10 flex justify-center rounded-md m-2 bg-white font-bold`}
+                // style={{
+                //   background:
+                //     teamType === "home"
+                //       ? teamDetails.home_team_color
+                //       : teamDetails.away_team_color,
+                // }}
               >
                 <strong>{position.toUpperCase()}: </strong>
                 {teamDetails[positionKey] ? (
@@ -123,9 +133,14 @@ const TeamLineUp = ({ id }) => {
                 ) : (
                   <button
                     onClick={() => handleJoinGame(teamType, position, true)}
+                    className={`hover:bg-${
+                      teamType === "home"
+                        ? teamDetails.home_team_color
+                        : teamDetails.away_team_color
+                    }-300`}
                     // disabled={isPositionSelected}
                   >
-                    + Click here to join!
+                    +Click here to join!
                   </button>
                 )}
               </p>

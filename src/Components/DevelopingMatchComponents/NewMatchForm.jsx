@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 
 const NewMatchForm = () => {
   const { user } = useOutletContext();
@@ -7,8 +7,40 @@ const NewMatchForm = () => {
 
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      fetch(`${URL}/api/match/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setMatchInput(data);
+          const matchDate = new Date(data.start_datetime);
+          const date = matchDate.toISOString().split("T")[0];
+          const time = matchDate.toTimeString().split(" ")[0];
+
+          setMatchInput((prevMatchInput) => ({
+            ...prevMatchInput,
+            date,
+            time,
+          }));
+          fetch(`${URL}/api/match/${id}/teams`)
+            .then((res) => res.json())
+            .then((teamData) => {
+              setHomeTeamInput({
+                name: teamData[0].home_team_name || "",
+                home_color: teamData[0].home_team_color || "",
+              });
+              setAwayTeamInput({
+                name: teamData[0].away_team_name || "",
+                away_color: teamData[0].away_team_color || "",
+              });
+            });
+        });
+    }
+  }, [id]);
+
   const [matchInput, setMatchInput] = useState({
-    // start_datetime: null,
     date: "",
     time: "",
     duration: "",
@@ -26,18 +58,17 @@ const NewMatchForm = () => {
   const [homeTeamInput, setHomeTeamInput] = useState({
     name: "",
     home_color: "",
-    // away_color: "",
   });
 
   const [awayTeamInput, setAwayTeamInput] = useState({
     name: "",
-    // home_color: "",
     away_color: "",
   });
 
   function handleChange(event) {
     setMatchInput({ ...matchInput, [event.target.id]: event.target.value });
   }
+
   function handleHomeTeamChange(event) {
     setHomeTeamInput({
       ...homeTeamInput,
@@ -86,104 +117,113 @@ const NewMatchForm = () => {
   }
 
   return (
-    <div className="flex justify-center items-center mt-16">
-      <div className="border-2 border-black p-5">
+    <div className="flex justify-center items-center mt-16 h-screen ">
+      <div className="border-4 border-black p-5 rounded-xl shadow-2xl">
         <div className="flex justify-center font-bold text-2xl mb-4">
-          <h1>Create a Game</h1>
+          <h1>{id ? "Edit Game" : "Create a Game!"}</h1>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="date">Date: </label>
-            <input
-              type="date"
-              id="date"
-              value={matchInput.date}
-              className="border border-gray-300 p-2 rounded-md"
-              onChange={handleChange}
-            />
+        <form onSubmit={handleSubmit} className="flex flex-wrap justify-center">
+          <div className="flex flex-col w-full md:w-1/2 md:pr-4">
+            <div className="flex flex-col">
+              <label htmlFor="date">Date: </label>
+              <input
+                type="date"
+                id="date"
+                value={matchInput.date}
+                className="border border-gray-300 p-2 rounded-md"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="time">Time: </label>
+              <input
+                type="time"
+                id="time"
+                value={matchInput.time}
+                className="border border-gray-300 p-2 rounded-md"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="duration">Duration: </label>
+              <select
+                name="duration"
+                id="duration"
+                className="border border-gray-300 p-2 rounded-md"
+                value={matchInput.duration}
+                onChange={handleChange}
+                required
+              >
+                <option value="">-Select Match Length-</option>
+                <option value="60">60 Minutes</option>
+                <option value="90">90 Minutes</option>
+                <option value="120">120 Minutes</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="time">Image Link: </label>
+              <input
+                type="url"
+                id="img"
+                value={matchInput.img}
+                className="border border-gray-300 p-2 rounded-md"
+                onChange={handleChange}
+                placeholder="https://example.com"
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="address">Address:</label>
+              <input
+                type="text"
+                id="address"
+                value={matchInput.address}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded-md"
+                placeholder="Street Address"
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="city">City:</label>
+              <input
+                type="text"
+                id="city"
+                value={matchInput.city}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded-md"
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="state">State:</label>
+              <input
+                type="text"
+                id="state"
+                value={matchInput.state}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded-md"
+                maxLength={2}
+                placeholder="e.g. XX"
+                required
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="zip">Zip:</label>
+              <input
+                type="text"
+                id="zip"
+                value={matchInput.zip}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 rounded-md mb-2"
+                required
+              />
+            </div>
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="time">Time: </label>
-            <input
-              type="time"
-              id="time"
-              value={matchInput.time}
-              className="border border-gray-300 p-2 rounded-md"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="duration">Duration: </label>
-            <select
-              name="duration"
-              id="duration"
-              className="border border-gray-300 p-2 rounded-md"
-              value={matchInput.duration}
-              onChange={handleChange}
-            >
-              <option value="">-Select Match Length-</option>
-              <option value="60">60 Minutes</option>
-              <option value="90">90 Minutes</option>
-              <option value="120">120 Minutes</option>
-            </select>
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="time">Image Link: </label>
-            <input
-              type="url"
-              id="img"
-              value={matchInput.img}
-              className="border border-gray-300 p-2 rounded-md"
-              onChange={handleChange}
-              placeholder="https://example.com"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="address">Address:</label>
-            <input
-              type="text"
-              id="address"
-              value={matchInput.address}
-              onChange={handleChange}
-              className="border border-gray-300 p-2 rounded-md"
-              placeholder="Street Address"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="city">City:</label>
-            <input
-              type="text"
-              id="city"
-              value={matchInput.city}
-              onChange={handleChange}
-              className="border border-gray-300 p-2 rounded-md"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="state">State:</label>
-            <input
-              type="text"
-              id="state"
-              value={matchInput.state}
-              onChange={handleChange}
-              className="border border-gray-300 p-2 rounded-md"
-              maxLength={2}
-              placeholder="e.g. XX"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="zip">Zip:</label>
-            <input
-              type="text"
-              id="zip"
-              value={matchInput.zip}
-              onChange={handleChange}
-              className="border border-gray-300 p-2 rounded-md mb-2"
-            />
-          </div>
-          {/* CREATING TEAMS */}
-          <div className="border-2 border-black px-10 py-2">
-            <div className="border-2 border-black p-5 m-5">
+          <div className="flex flex-col w-full md:w-1/2 md:pl-4 items-center justify-center">
+            <div className="border-2 border-black rounded-xl bg-amber-500 p-5 m-5">
               <div className="flex flex-col ">
                 <label htmlFor="homeTeam">Home Team Name:</label>
                 <input
@@ -192,6 +232,7 @@ const NewMatchForm = () => {
                   value={homeTeamInput.name}
                   onChange={handleHomeTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
+                  required
                 />
               </div>
               <div className="flex flex-col">
@@ -202,11 +243,11 @@ const NewMatchForm = () => {
                   value={homeTeamInput.home_color}
                   onChange={handleHomeTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
+                  required
                 />
               </div>
             </div>
-
-            <div className="border-2 border-black p-5 m-5">
+            <div className="border-2 border-black bg-amber-500 rounded-xl p-5 m-5">
               <div className="flex flex-col">
                 <label htmlFor="awayTeam">Away Team Name:</label>
                 <input
@@ -215,6 +256,7 @@ const NewMatchForm = () => {
                   value={awayTeamInput.name}
                   onChange={handleAwayTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
+                  required
                 />
               </div>
               <div className="flex flex-col">
@@ -225,14 +267,15 @@ const NewMatchForm = () => {
                   value={awayTeamInput.away_color}
                   onChange={handleAwayTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
+                  required
                 />
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center w-full">
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded-md"
+              className="border-black border-2 m-1 px-4 py-2 rounded-lg bg-amber-500 hover:font-bold"
             >
               Submit
             </button>
