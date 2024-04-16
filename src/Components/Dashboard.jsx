@@ -21,7 +21,7 @@ const Dashboard = ({ handleLogout }) => {
   }, [matches]);
 
   return (
-    <div className="p-5 flex flex-col md:flex-row ">
+    <div className="p-5 flex flex-col md:flex-row h-screen">
       <div className="sm:w-3/4">
         {" "}
         <div className="flex text-xl mb-4 items-center">
