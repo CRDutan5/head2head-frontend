@@ -131,12 +131,15 @@ const Register = ({ setToggleLogin }) => {
 
         <p>
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-500">
+          <Link
+            to="/login"
+            className="text-amber-500 font-bold border-b-2 border-amber-500"
+          >
             Click here to login!
           </Link>
         </p>
         <div className="flex justify-center">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md">
+          <button className="bg-amber-500 border-2 border-black py-2 px-4 rounded-md">
             Submit
           </button>
         </div>

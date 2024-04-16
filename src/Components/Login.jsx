@@ -71,7 +71,9 @@ const Login = ({ setToggleLogin }) => {
         <form onSubmit={handleSubmit}>
           <div className="">
             <div className="flex flex-col">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username" className="flex justify-start">
+                Username
+              </label>
               <input
                 id="username"
                 value={user.username}
@@ -83,7 +85,9 @@ const Login = ({ setToggleLogin }) => {
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="password">Password </label>
+              <label htmlFor="password" className="flex justify-start">
+                Password{" "}
+              </label>
               <input
                 id="password"
                 value={user.password}
@@ -96,12 +100,12 @@ const Login = ({ setToggleLogin }) => {
             </div>
           </div>
           <button
-            className="border-black border-2 bg-white m-1 p-1 rounded-lg hover:bg-gradient-to-b from-green-500 to-lime-400 font-bold"
+            className="border-black border-2 m-1 px-4 py-2 rounded-lg bg-amber-500 hover:font-bold"
             onClick={handleDemoSignIn}
           >
             Demo User
           </button>
-          <button className="border-black border-2 bg-white m-1 p-1 rounded-lg hover:bg-gradient-to-b from-green-500 to-lime-400 font-bold">
+          <button className="border-black border-2 m-1 px-4 py-2 rounded-lg bg-amber-500 hover:font-bold">
             Submit
           </button>
         </form>

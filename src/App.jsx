@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-neutral-50 to-blue-800">
+      <div className="bg-gradient-to-b from-neutral-50 to-blue-800 ">
         <NavBar
           handleLogout={handleLogout}
           toggleLogin={toggleLogin}
