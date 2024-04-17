@@ -10,6 +10,7 @@ import LandingPage from "./Components/LandingPage";
 import About from "./Components/About";
 import NewMatchForm from "./Components/DevelopingMatchComponents/NewMatchForm";
 import MatchDetails from "./Components/MatchDetailsComponent/MatchDetails";
+import Footer from "./Components/Footer";
 
 function App() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-neutral-50 to-blue-800 ">
+      <div className="bg-gradient-to-b from-neutral-50 to-blue-800">
         <NavBar
           handleLogout={handleLogout}
           toggleLogin={toggleLogin}
@@ -58,6 +59,7 @@ function App() {
             <Route path="/dashboard/match/create" element={<NewMatchForm />} />
           </Route>
         </Routes>
+        <Footer />
       </div>
     </>
   );

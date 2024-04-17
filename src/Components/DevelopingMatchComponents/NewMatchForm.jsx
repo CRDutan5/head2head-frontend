@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import {
   dateFormatted,
+  dateFormattedForm,
   formatDateAndTime,
   formatTime,
   timeFormatted,
@@ -22,7 +23,7 @@ const NewMatchForm = () => {
         .then((data) => {
           setMatchInput((prevMatchInput) => ({
             ...prevMatchInput,
-            date: dateFormatted(data.start_datetime),
+            date: dateFormattedForm(data.start_datetime),
             time: formatTime(data.start_datetime),
             ...data, // Keep other properties intact
           }));
