@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
+import {
+  dateFormatted,
+  formatDateAndTime,
+  formatTime,
+  timeFormatted,
+} from "../../../helper";
 
 const NewMatchForm = () => {
   const { user } = useOutletContext();
@@ -14,15 +20,11 @@ const NewMatchForm = () => {
       fetch(`${URL}/api/match/${id}`)
         .then((res) => res.json())
         .then((data) => {
-          setMatchInput(data);
-          const matchDate = new Date(data.start_datetime);
-          const date = matchDate.toISOString().split("T")[0];
-          const time = matchDate.toTimeString().split(" ")[0];
-
           setMatchInput((prevMatchInput) => ({
             ...prevMatchInput,
-            date,
-            time,
+            date: dateFormatted(data.start_datetime),
+            time: formatTime(data.start_datetime),
+            ...data, // Keep other properties intact
           }));
           fetch(`${URL}/api/match/${id}/teams`)
             .then((res) => res.json())
@@ -83,37 +85,54 @@ const NewMatchForm = () => {
     });
   }
 
+  // CHECK THE TIME, IT HAS TO BE FORMATTED CORRECTLY, IF I PUT 5 IT GOES TO 9. INCREMENTS BY 4
   function handleSubmit(event) {
     event.preventDefault();
-    const start_datetime = `${matchInput.date}T${matchInput.time}:00.000Z`;
 
-    const match = {
-      ...matchInput,
-      start_datetime: start_datetime,
-    };
+    if (id) {
+      const match = {
+        ...matchInput,
+        start_datetime: `${matchInput.date}T${matchInput.time}:00.000Z`,
+      };
+      const options = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(match),
+      };
+      fetch(`${URL}/api/match/${id}`, options)
+        .then((res) => res.json())
+        .then((data) => console.log("Successfully Updated!", data))
+        .then((data) => navigate(`/dashboard/match/${match.id}`));
+    } else {
+      const match = {
+        ...matchInput,
+        start_datetime: `${matchInput.date}T${matchInput.time}:00.000Z`,
+      };
 
-    delete match.date;
-    delete match.time;
+      delete match.date;
+      delete match.time;
 
-    const homeTeam = homeTeamInput;
-    const awayTeam = awayTeamInput;
-    const createdMatch = { match, homeTeam, awayTeam };
+      console.log(match);
+      const homeTeam = homeTeamInput;
+      const awayTeam = awayTeamInput;
+      const createdMatch = { match, homeTeam, awayTeam };
 
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(createdMatch),
-    };
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(createdMatch),
+      };
 
-    fetch(`${URL}/api/match`, options)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        navigate(`/dashboard/match/${data.id}`);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      fetch(`${URL}/api/match`, options)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          navigate(`/dashboard/match/${data.id}`);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   }
 
   return (
@@ -132,7 +151,7 @@ const NewMatchForm = () => {
                 value={matchInput.date}
                 className="border border-gray-300 p-2 rounded-md"
                 onChange={handleChange}
-                required
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -143,7 +162,7 @@ const NewMatchForm = () => {
                 value={matchInput.time}
                 className="border border-gray-300 p-2 rounded-md"
                 onChange={handleChange}
-                required
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -154,7 +173,7 @@ const NewMatchForm = () => {
                 className="border border-gray-300 p-2 rounded-md"
                 value={matchInput.duration}
                 onChange={handleChange}
-                required
+                // required
               >
                 <option value="">-Select Match Length-</option>
                 <option value="60">60 Minutes</option>
@@ -171,7 +190,7 @@ const NewMatchForm = () => {
                 className="border border-gray-300 p-2 rounded-md"
                 onChange={handleChange}
                 placeholder="https://example.com"
-                required
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -183,7 +202,7 @@ const NewMatchForm = () => {
                 onChange={handleChange}
                 className="border border-gray-300 p-2 rounded-md"
                 placeholder="Street Address"
-                required
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -194,7 +213,7 @@ const NewMatchForm = () => {
                 value={matchInput.city}
                 onChange={handleChange}
                 className="border border-gray-300 p-2 rounded-md"
-                required
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -207,7 +226,7 @@ const NewMatchForm = () => {
                 className="border border-gray-300 p-2 rounded-md"
                 maxLength={2}
                 placeholder="e.g. XX"
-                required
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -218,7 +237,7 @@ const NewMatchForm = () => {
                 value={matchInput.zip}
                 onChange={handleChange}
                 className="border border-gray-300 p-2 rounded-md mb-2"
-                required
+                // required
               />
             </div>
           </div>
@@ -232,7 +251,7 @@ const NewMatchForm = () => {
                   value={homeTeamInput.name}
                   onChange={handleHomeTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
-                  required
+                  // required
                 />
               </div>
               <div className="flex flex-col">
@@ -243,7 +262,7 @@ const NewMatchForm = () => {
                   value={homeTeamInput.home_color}
                   onChange={handleHomeTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
-                  required
+                  // required
                 />
               </div>
             </div>
@@ -256,7 +275,7 @@ const NewMatchForm = () => {
                   value={awayTeamInput.name}
                   onChange={handleAwayTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
-                  required
+                  // required
                 />
               </div>
               <div className="flex flex-col">
@@ -267,7 +286,7 @@ const NewMatchForm = () => {
                   value={awayTeamInput.away_color}
                   onChange={handleAwayTeamChange}
                   className="border border-gray-300 p-2 rounded-md mb-2"
-                  required
+                  // required
                 />
               </div>
             </div>
