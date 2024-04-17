@@ -1,8 +1,9 @@
-// export function dateFormatted(receivedDate) {
-//   const dateObj = new Date(receivedDate);
-//   const date = dateObj.toLocaleDateString();
-//   return date;
-// }
+export function dateFormattedForm(receivedDate) {
+  const date = receivedDate.split("T");
+  return date[0];
+}
+
+// 2024-04-23T03:00:00.000Z
 
 // export function timeFormatted(receivedDate) {
 //   const dateObj = new Date(receivedDate);
@@ -14,10 +15,24 @@
 // }
 
 export function dateFormatted(receivedDate) {
-  if (!receivedDate) return ""; // Return empty string if receivedDate is undefined or null
-  // Extracting only the date part by slicing the string
-  const date = receivedDate.slice(0, 10); // Extracts characters from index 0 to 9 (inclusive)
-  return date;
+  const months = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December",
+  };
+  if (!receivedDate) return "";
+  const date = receivedDate.slice(0, 10);
+  const [year, month, day] = date.split("-");
+  return `${months[+month]} ${day}, ${year}`;
 }
 
 export function timeFormatted(receivedDate) {

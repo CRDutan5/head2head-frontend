@@ -110,7 +110,13 @@ const Login = ({ setToggleLogin }) => {
           </button>
         </form>
         <p>
-          No Account? <Link to="/register">Register</Link>
+          No Account?{" "}
+          <Link
+            to="/register"
+            className="text-amber-500 border-b-2 border-amber-500"
+          >
+            Register
+          </Link>
         </p>
       </div>
     </div>

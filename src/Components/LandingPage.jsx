@@ -5,9 +5,15 @@ import Login from "./Login";
 
 function LandingPage({ toggleLogin }) {
   return (
-    <div className="grid grid-cols-3 gap-4 h-screen">
-      <div className="col-span-2 flex justify-center items-center">
-        <div className="flex flex-col items-center">
+    <div className={!toggleLogin && `grid grid-cols-3 gap-4 `}>
+      <div className="col-span-2 flex justify-center items-center h-screen">
+        <div
+          className={
+            !toggleLogin
+              ? `flex flex-col items-center`
+              : `flex flex-col items-center w-1/2 pt-12`
+          }
+        >
           <img
             src="images/pickup-soccer.jpeg"
             className="object-cover w-4/6 h-2/4 rounded-lg mb-4"
@@ -24,13 +30,9 @@ function LandingPage({ toggleLogin }) {
           </p>
         </div>
       </div>
-      {!toggleLogin ? (
+      {!toggleLogin && (
         <div className="flex justify-center items-center">
           <Register />
-        </div>
-      ) : (
-        <div className="col-span-1">
-          <Login />
         </div>
       )}
     </div>

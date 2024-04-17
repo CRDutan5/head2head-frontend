@@ -78,7 +78,7 @@ const MatchDetails = () => {
           />
         </div>
       </div>
-      <div>
+      <div className="flex justify-center items-center">
         <TeamLineUp id={id} />
       </div>
     </div>
